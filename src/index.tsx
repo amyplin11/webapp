@@ -1,14 +1,23 @@
 import * as React from "react";
-import ReactDom from "react-dom";
+import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import basicReducer from "./reducers/basicReducer";
-import { storeEnhancers } from "./storeEnhancer";
+import { createStore, combineReducers } from "redux";
+import basic from "./reducers/basic";
+import storeEnhancers from "./storeEnhancer";
 import { Actions as FarceActions } from "farce";
-import { createConnectedRouter, createRender, resolver } from "found";
+import {
+  createConnectedRouter,
+  createRender,
+  foundReducer,
+  resolver
+} from "found";
 import { routeConfig } from "./routeConfig";
 
-const store = createStore(basicReducer, {}, storeEnhancers(routeConfig));
+const store = createStore(
+  combineReducers({ found: foundReducer, basic }),
+  {},
+  storeEnhancers(routeConfig)
+);
 
 store.dispatch(FarceActions.init());
 
@@ -22,10 +31,11 @@ const ConnectedRouter = createConnectedRouter({
 
 const routes = (
   <Provider store={store}>
-    <ConnectedRouter resolver={resolver} />
+    <ConnectedRouter matchContext={{ store }} resolver={resolver} />
   </Provider>
 );
+
 const root = document.getElementById("app");
-ReactDom.render(routes, root);
+render(routes, root);
 
 module.hot.accept();

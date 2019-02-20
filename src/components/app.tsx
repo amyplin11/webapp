@@ -1,6 +1,7 @@
 import * as React from "react";
-import ExampleComponent from "./ExampleComponent";
+import MainPage from "./MainPage";
+import "babel-polyfill";
 
-const App = () => <ExampleComponent />;
+const App = () => <MainPage />;
 
 export default App;

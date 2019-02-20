@@ -1,34 +1,35 @@
-import {
-  Actions as FarceActions,
-  BrowserProtocol,
-  createHistoryEnhancer,
-  queryMiddleware
-} from "farce";
-import { createMatchEnhancer, Matcher } from "found";
+import { BrowserProtocol, createHistoryEnhancer, queryMiddleware } from "farce";
+import { Matcher, createMatchEnhancer } from "found";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import { applyMiddleware } from "redux";
+import { applyMiddleware, compose } from "redux";
+import { middleware } from "./middleware";
 import thunk from "redux-thunk";
 import * as Immutable from "Immutable";
 
-export const storeEnhancers = routeConfig => {
-  let enhancerArray = [
-    applyMiddleware(thunk),
-    createHistoryEnhancer({
-      protocol: new BrowserProtocol(),
-      middleware: [queryMiddleware]
-    }),
-    createMatchEnhancer(new Matcher(routeConfig, { matchStystemRoutes: false }))
-  ];
-
+const storeEnhancers = routeConfig => {
   if (process.env.NODE_ENV === "development" && typeof window === "object") {
-    enhancerArray = [
-      ...enhancerArray,
+    return compose(
+      applyMiddleware(thunk, ...middleware),
+      createHistoryEnhancer({
+        protocol: new BrowserProtocol(),
+        middleware: [queryMiddleware]
+      }),
+      createMatchEnhancer(new Matcher(routeConfig, { matchStemRoutes: false })),
       devToolsEnhancer({
         serialize: {
           immutable: Immutable
         }
       } as any)
-    ];
+    );
   }
+  return compose(
+    applyMiddleware(thunk, ...middleware),
+    createHistoryEnhancer({
+      protocol: new BrowserProtocol(),
+      middleware: [queryMiddleware]
+    }),
+    createMatchEnhancer(new Matcher(routeConfig, { matchStemRoutes: false }))
+  );
 };
 
+export default storeEnhancers;
