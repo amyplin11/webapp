@@ -6,6 +6,8 @@
   "scripts": {
     "build": "webpack-dev-server --mode development",
     "build:prod": "webpack -p",
+    "build:ts": "cross-env NODE_ENV=development tsc --pretty",
+    "build:tslint-rules": "tsc --project tslint-rules/tsconfig.json",
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,8 +25,11 @@
     "awesome-typescript-loader": "^5.2.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "react-hot-loader": "^4.3.4",
     "redux-devtools-extension": "^2.13.5",
@@ -37,16 +42,25 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
+    "@material-ui/core": "^3.8.1",
+    "@material-ui/icons": "^3.0.1",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
     "@types/react-redux": "^6.0.6",
     "@types/webpack-env": "^1.13.6",
-    "found": "^0.3.14",
+    "found": "^0.3.5",
     "immutable": "^4.0.0-rc.12",
+    "install": "^0.12.2",
+    "navi": "^0.11.5",
+    "npm": "^6.5.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-jss": "^8.6.1",
+    "react-navi": "^0.11.6",
     "react-redux": "^5.0.7",
+    "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   }
 }

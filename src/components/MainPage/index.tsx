@@ -1,8 +1,14 @@
 import * as React from "react";
-import ExampleComponent from "../ExampleComponent";
+import HomeGrid from "../HomeGrid";
+import classes from "./styles";
 
 const MainPage = () => {
-  return <ExampleComponent />;
+  return (
+    <>
+      <h1 className={classes.header}>WELCOME</h1>
+      <HomeGrid />
+    </>
+  );
 };
 
 export default MainPage;

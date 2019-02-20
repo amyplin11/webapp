@@ -1,8 +1,13 @@
 const webpack = require("webpack");
-const path = require("path");
+var path = require("path");
+
+//folders
+const pkgRoot = path.resolve(__dirname, "../");
+const srcRoot = path.join(pkgRoot, "src");
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: ["babel-polyfill", "./src/index.tsx"],
+  // entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -23,7 +28,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"]
+    modules: [srcRoot, "node_modules"],
+    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+    alias: {
+      src: path.resolve(__dirname, "src")
+    }
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
