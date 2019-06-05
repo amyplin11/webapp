@@ -30,6 +30,7 @@ export const fetchImgUrl = () => {
 const fetchPost = async () => {
   const response = await fetch(photoAPI);
   // const response = await fetch(giphyAPI);
+  await timeout(3000);
 
   const json = await response.json();
   console.log("json = ", json);
@@ -45,3 +46,7 @@ const fetchPost = async () => {
 
   // return { url: json.data.images["original"].url };
 };
+
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
